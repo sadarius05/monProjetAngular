@@ -7,17 +7,17 @@
       </p>
       <ul class="list-group">
         <app-appareil
-          *ngFor="let appareil of appareils"
+          *ngFor="let appareil of appareils; let i = index"
+          [indexOfAppareil]="i"
           [appareilName]="appareil.name"
           [appareilStatus]="appareil.status"
         ></app-appareil>
       </ul>
-      <button
-        class="btn btn-success"
-        [disabled]="!isAuth"
-        (click)="onAllumer()"
-      >
+      <button class="btn btn-success" (click)="onAllumer()">
         Tout Allumer
+      </button>
+      <button class="btn btn-danger" (click)="onEteindre()">
+        Tout Eteindre
       </button>
     </div>
   </div>
