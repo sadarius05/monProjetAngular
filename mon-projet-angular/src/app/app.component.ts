@@ -6,12 +6,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  [x: string]: string;
   isAuth = false;
 
-  appareilOne = 'Machine a laver';
-  appareilTwo = 'Television';
-  appareilThree = 'Ordinateur';
+  appareils = [
+    {
+      name: 'Machine a laver',
+      status: 'eteint',
+    },
+    {
+      name: 'Television',
+      status: 'allume',
+    },
+    {
+      name: 'Ordinateur',
+      status: 'eteint',
+    },
+  ];
 
   constructor() {
     setTimeout(() => {

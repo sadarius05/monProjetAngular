@@ -12,4 +12,12 @@ export class AppareilComponent {
   getStatus() {
     return this.appareilStatus;
   }
+  getColor() {
+    if (this.appareilStatus === 'allume') {
+      return 'green';
+    } else if (this.appareilStatus === 'eteint') {
+      return 'red';
+    }
+    return;
+  }
 }
