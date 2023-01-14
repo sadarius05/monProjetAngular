@@ -1,24 +1,13 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+@Injectable()
 export class AppareilService {
   appareilSubject = new Subject<any[]>();
-  private appareils = [
-    {
-      id: 1,
-      name: 'Machine a laver',
-      status: 'eteint',
-    },
-    {
-      id: 2,
-      name: 'Television',
-      status: 'allume',
-    },
-    {
-      id: 3,
-      name: 'Ordinateur',
-      status: 'eteint',
-    },
-  ];
+  private appareils!: any[];
+
+  constructor(private httpClient: HttpClient) {}
 
   emitAppareilSubject() {
     this.appareilSubject.next(this.appareils.slice());
@@ -63,5 +52,30 @@ export class AppareilService {
 
     this.appareils.push(appareilObject);
     this.emitAppareilSubject();
+  }
+  saveAppareilsToServer() {
+    this.httpClient
+      .put(
+        'https://base-de-donnees-projet-angular-default-rtdb.firebaseio.com/appareils.json',
+        this.appareils
+      )
+      .subscribe({
+        next: (value) => console.log('Enregistrement termine !' + value),
+        error: (erreur) => console.log('erreur !' + erreur),
+      });
+  }
+
+  getAppareilsFromServer() {
+    this.httpClient
+      .get<any[]>(
+        'https://base-de-donnees-projet-angular-default-rtdb.firebaseio.com/appareils.json'
+      )
+      .subscribe({
+        next: (response) => {
+          (this.appareils = response), this.emitAppareilSubject();
+        },
+        error: (erreur) =>
+          console.log('Erreur au chargement des donnees !' + erreur),
+      });
   }
 }
